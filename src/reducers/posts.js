@@ -1,13 +1,5 @@
 const _add_a_post = (posts, post) =>{
-
-    let id = +new Date()
-    let date = new Date();
-    let time = (date.getMonth() + 1) + "/" + date.getDate() + ":" + date.getHours();
-    let detailedLink = "http://localhost/post/" + id
-    let imageFile = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-location.svg"
-    let imageAlt = "location"
-    let newPost = Object.assign({}, {id, time, detailedLink, imageFile, imageAlt}, post)
-    const newPosts = [newPost, ...posts ]
+    const newPosts = [post, ...posts ]
     return newPosts
 }
 
@@ -40,7 +32,9 @@ const _update_title = (posts, index, title) => {
 
 function posts(state = [], action){
   switch(action.type){
-    case 'ADD_POST':
+    case 'FETCH_POSTS_SUCCESS':
+      return action.posts  
+    case 'ADD_POST_SUCCESS':
       return _add_a_post(state, action.post)  
     case 'REMOVE_POST':
       console.log('remove posts')

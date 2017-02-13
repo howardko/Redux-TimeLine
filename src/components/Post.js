@@ -15,9 +15,7 @@ class Post extends Component {
         <PostContentContainer
           index={index} 
           title={post.title}
-          isTitleEditing={post.isTitleEditing}
           content={post.content}
-          isContentEditing={post.isContentEditing}
           time={post.time}
           photos={post.photos}
           detailedLink={post.detailedLink}

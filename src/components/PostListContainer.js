@@ -7,6 +7,10 @@ import PostAdd from './PostAdd'
 import Post from './Post'
 
 class PostListContainer extends Component {
+  componentDidMount() {
+    this.props.fetchPosts();
+  }
+
   render(){
     const { posts, addPost} = this.props
 

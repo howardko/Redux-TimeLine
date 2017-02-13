@@ -9,12 +9,14 @@ class PostContentContainer extends Component{
   render()
   {
     const {toogleContent, toogleTitle, updateContent, updateTitle} = this.props
-    const { index, isTitleEditing, isContentEditing, detailedLink, time, photos, title, content } = this.props
-
+    const { index, detailedLink, time, photos, title, content } = this.props
+    const {isTitleEditing, isContentEditing, focusIndex} = this.props
+    const focused = (index === focusIndex)
     return(
     <div className="cd-timeline-content">
         <PostContent
             index={index}
+            focused={focused}
             isTitleEditing={isTitleEditing}
             isContentEditing={isContentEditing}
             title={title}
@@ -31,10 +33,18 @@ class PostContentContainer extends Component{
   }
 }
 
+function mapStateToProps(state){
+  return {
+    isTitleEditing: state.edit.isTitleEditing,
+    focusIndex: state.edit.focusIndex,
+    isContentEditing: state.edit.isContentEditing,
+  }
+}
+
 function mapDispathToProps(dispatch){
   return bindActionCreators(actionCreators, dispatch)
 }
 
-PostContentContainer = connect(null, mapDispathToProps)(PostContentContainer)
+PostContentContainer = connect(mapStateToProps, mapDispathToProps)(PostContentContainer)
 
 export default PostContentContainer

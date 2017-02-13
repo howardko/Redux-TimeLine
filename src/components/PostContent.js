@@ -50,9 +50,9 @@ class PostContent extends Component{
 
   render()
   {
-    const { isTitleEditing, isContentEditing, detailedLink, time, photos } = this.props
-    const titleDisplay = (!isTitleEditing) ? this.renderTitleViewMode() : this.renderTitleEditMode()
-    const contentDisplay = (!isContentEditing) ? this.renderContentViewMode(): this.renderContentEditMode()
+    const { focused,isTitleEditing, isContentEditing, detailedLink, time, photos } = this.props
+    const titleDisplay = (isTitleEditing && focused) ? this.renderTitleEditMode() : this.renderTitleViewMode() 
+    const contentDisplay = (isContentEditing && focused) ? this.renderContentEditMode() : this.renderContentViewMode()
     return(
     <div>
         {titleDisplay}

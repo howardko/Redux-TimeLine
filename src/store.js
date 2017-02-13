@@ -1,11 +1,7 @@
-import { createStore } from 'redux'
-
-import posts from './data/posts'
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import rootReducer from './reducers/index'
-const defaultState = {
-  posts
-}
 
-const store = createStore(rootReducer, defaultState)
+const store = createStore(rootReducer, applyMiddleware(thunk))
 
 export default store

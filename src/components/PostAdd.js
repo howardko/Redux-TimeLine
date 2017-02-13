@@ -24,12 +24,18 @@ class PostAdd extends Component {
   }
 
   handleSubmitOnclick = (onPostAdd) => {
+    let id = +new Date()
+    let date = new Date()
     const post = {
       title: this.state.title,
       content: this.state.content,
       photos: this.state.files,
-      isTitleEditing: false,
-      isContentEditing: false
+      id: id,
+      date: date,
+      time: (date.getMonth() + 1) + "/" + date.getDate() + ":" + date.getHours(),
+      detailedLink: "http://localhost/post/" + id,
+      imageFile: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-location.svg",
+      imageAlt: "location"
     }
     onPostAdd(post)
     this.setState({ content: '', title: '', files: [] });

@@ -1,8 +1,29 @@
-export function addPost(post){
-  return {
-    type: 'ADD_POST',
-    post
+export function fetchPosts() {
+    return (dispatch) => {
+      fetch('http://localhost:3004/posts')
+        .then((response) => response.json())
+        .then((posts) => dispatch({
+          type: "FETCH_POSTS_SUCCESS",
+          posts
+        }));
+    };
   }
+
+export function addPost(post){
+  return (dispatch) => {
+      fetch('http://localhost:3004/posts', {
+          method: 'post',
+          body: JSON.stringify(post),
+          headers: new Headers({
+            'Content-Type': 'application/json'
+          })
+        })
+        .then((response) => response.json())
+        .then((posts) => dispatch({
+          type: "ADD_POST_SUCCESS",
+          post
+        }));
+    };
 }
 
 export function removePost(idx){
