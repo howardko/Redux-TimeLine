@@ -13,7 +13,9 @@ class Post extends Component {
           imageAlt={post.imageAlt}
         />
         <PostContentContainer
-          index={index} 
+          index={index}
+          post={post}
+          postId={post.id} 
           title={post.title}
           content={post.content}
           time={post.time}

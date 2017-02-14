@@ -33,20 +33,42 @@ export function removePost(idx){
   }
 }
 
-export function updateTitle(idx, title){
-  return {
-    type: 'UPDATE_TITLE',
-    idx,
-    title
-  }
+export function updateTitle(idx, postId, post, title){
+    const updated = Object.assign({}, post, {title: title})
+    return (dispatch) => {
+      fetch('http://localhost:3004/posts/' + postId, {
+          method: 'put',
+          body: JSON.stringify(updated),
+          headers: new Headers({
+            'Content-Type': 'application/json'
+          })
+        })
+        .then((response) => response.json())
+        .then((posts) => dispatch({
+          type: 'UPDATE_TITLE',
+          idx,
+          title
+        }));
+    };
 }
 
-export function updateContent(idx, content){
-  return {
-    type: 'UPDATE_CONTENT',
-    idx,
-    content
-  }
+export function updateContent(idx, postId, post, content){
+    const updated = Object.assign({}, post, {content: content})
+    return (dispatch) => {
+      fetch('http://localhost:3004/posts/' + postId, {
+          method: 'put',
+          body: JSON.stringify(updated),
+          headers: new Headers({
+            'Content-Type': 'application/json'
+          })
+        })
+        .then((response) => response.json())
+        .then((posts) => dispatch({
+          type: 'UPDATE_CONTENT',
+          idx,
+          content
+        }));
+    };
 }
 
 export function toogleTitle(idx){

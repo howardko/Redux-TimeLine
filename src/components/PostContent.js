@@ -19,11 +19,11 @@ class PostContent extends Component{
   }
 
   renderTitleEditMode() {
-    const { index, title, onTitleUpdate } = this.props
+    const { index, postId, title, post, onTitleUpdate } = this.props
     return(
       <TitleEditForm 
-        title={title} 
-        onTitleUpdate={ (title) => onTitleUpdate(index, title)}
+        title={title}
+        onTitleUpdate={ (title) => onTitleUpdate(index, postId, post, title)}
       />
     )
   }
@@ -39,11 +39,11 @@ class PostContent extends Component{
   }
 
   renderContentEditMode() {
-    const { index, content, onContentUpdate } = this.props
+    const { index, postId, post, content, onContentUpdate } = this.props
     return(
       <ContentEditForm 
-        content={content} 
-        onContentUpdate={(content) => onContentUpdate(index, content)}
+        content={content}
+        onContentUpdate={(content) => onContentUpdate(index, postId, post, content)}
       />
     )
   }

@@ -9,7 +9,7 @@ class PostContentContainer extends Component{
   render()
   {
     const {toogleContent, toogleTitle, updateContent, updateTitle} = this.props
-    const { index, detailedLink, time, photos, title, content } = this.props
+    const { index, postId, post, detailedLink, time, photos, title, content } = this.props
     const {isTitleEditing, isContentEditing, focusIndex} = this.props
     const focused = (index === focusIndex)
     return(
@@ -17,6 +17,8 @@ class PostContentContainer extends Component{
         <PostContent
             index={index}
             focused={focused}
+            postId={postId}
+            post={post}
             isTitleEditing={isTitleEditing}
             isContentEditing={isContentEditing}
             title={title}
