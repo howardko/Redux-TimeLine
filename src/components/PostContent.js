@@ -5,6 +5,7 @@ import PostMessage from './PostMessage'
 import PostPhoto from './PostPhoto'
 import TitleEditForm from './TitleEditForm'
 import ContentEditForm from './ContentEditForm'
+import PostAddTag from './PostAddTag'
 
 class PostContent extends Component{
 
@@ -48,15 +49,37 @@ class PostContent extends Component{
     )
   }
 
+  renderTagViewMode() {
+    const { index, tags, onTagDoubleClick } = this.props
+    return(
+      <h2
+        onDoubleClick={() => onTagDoubleClick(index)}>
+        {tags.join(",")}
+     </h2>
+    )
+  }
+
+  renderTagEditMode() {
+    const { index, postId, tags, post, onTagUpdate } = this.props
+    return(
+      <PostAddTag 
+        tags={tags}
+        onBlur={ (tags) => onTagUpdate(index, postId, post, tags)}
+      />
+    )
+  }
+
   render()
   {
-    const { focused,isTitleEditing, isContentEditing, detailedLink, time, photos } = this.props
+    const { focused, isTitleEditing, isContentEditing, isTagEditing, detailedLink, time, photos } = this.props
     const titleDisplay = (isTitleEditing && focused) ? this.renderTitleEditMode() : this.renderTitleViewMode() 
     const contentDisplay = (isContentEditing && focused) ? this.renderContentEditMode() : this.renderContentViewMode()
+    const tagDisplay = (isTagEditing && focused) ? this.renderTagEditMode() : this.renderTagViewMode()
     return(
     <div>
         {titleDisplay}
         {contentDisplay}
+        {tagDisplay}
         <PostPhoto photos={photos} />
         <a href={detailedLink} className="cd-read-more" style={{margin: "5px"}} >Read more</a>
         <span className="cd-date">{time}</span>

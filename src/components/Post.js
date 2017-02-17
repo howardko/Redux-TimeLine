@@ -20,6 +20,7 @@ class Post extends Component {
           content={post.content}
           time={post.time}
           photos={post.photos}
+          tags={post.tags}
           detailedLink={post.detailedLink}
         /> 
       </div>

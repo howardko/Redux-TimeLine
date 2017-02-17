@@ -8,9 +8,9 @@ import PostContent from './PostContent'
 class PostContentContainer extends Component{
   render()
   {
-    const {toogleContent, toogleTitle, updateContent, updateTitle} = this.props
-    const { index, postId, post, detailedLink, time, photos, title, content } = this.props
-    const {isTitleEditing, isContentEditing, focusIndex} = this.props
+    const {toogleContent, toogleTitle, toogleTag, updateContent, updateTitle, updateTag} = this.props
+    const { index, postId, post, detailedLink, time, photos, tags, title, content } = this.props
+    const {isTitleEditing, isContentEditing, isTagEditing, focusIndex} = this.props
     const focused = (index === focusIndex)
     return(
     <div className="cd-timeline-content">
@@ -21,15 +21,19 @@ class PostContentContainer extends Component{
             post={post}
             isTitleEditing={isTitleEditing}
             isContentEditing={isContentEditing}
+            isTagEditing={isTagEditing}
             title={title}
             content={content}
             detailedLink={detailedLink}
             time={time}
             photos={photos}
+            tags={tags}
             onContentUpdate={updateContent}
             onContentDoubleClick={toogleContent}
+            onTagDoubleClick={toogleTag}
             onTitleDoubleClick={toogleTitle}
             onTitleUpdate={updateTitle}
+            onTagUpdate={updateTag}
         />
     </div>)
   }
@@ -40,6 +44,7 @@ function mapStateToProps(state){
     isTitleEditing: state.edit.isTitleEditing,
     focusIndex: state.edit.focusIndex,
     isContentEditing: state.edit.isContentEditing,
+    isTagEditing: state.edit.isTagEditing,
   }
 }
 

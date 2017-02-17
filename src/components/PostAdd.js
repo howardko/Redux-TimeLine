@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
+import PostAddTag from './PostAddTag'
 
 class PostAdd extends Component {
   constructor() {
@@ -10,17 +11,22 @@ class PostAdd extends Component {
       detailedLink: '',
       time: '',
       files: [],
+      tags: [],
       dropZoneStyle: { display: "none"},
       textAreaStyle: { display: "block"}
     }
   }
 
   handleTitleChange = (e) => {
-    this.setState({ title: e.target.value });
+    this.setState({ title: e.target.value })
   }
 
   handleContentChange = (e) => {
-    this.setState({ content: e.target.value });
+    this.setState({ content: e.target.value })
+  }
+
+  handleTagsChange = (tags) => {
+    this.setState({ tags: tags })
   }
 
   handleSubmitOnclick = (onPostAdd) => {
@@ -30,6 +36,7 @@ class PostAdd extends Component {
       title: this.state.title,
       content: this.state.content,
       photos: this.state.files,
+      tags: this.state.tags,
       id: id,
       date: date,
       time: (date.getMonth() + 1) + "/" + date.getDate() + ":" + date.getHours(),
@@ -38,7 +45,7 @@ class PostAdd extends Component {
       imageAlt: "location"
     }
     onPostAdd(post)
-    this.setState({ content: '', title: '', files: [] });
+    this.setState({ content: '', title: '', files: [], tags: [] });
   }
 
   handleOpenClick = () => {
@@ -103,7 +110,10 @@ class PostAdd extends Component {
                       style={this.state.textAreaStyle}
                       onDragOver={this.handleTextAreaDrop}
                       onChange={this.handleContentChange}
-            /><br/>
+            />
+            <br />
+            <PostAddTag onTagChange={this.handleTagsChange} />
+            <br/>
             {
               this.state.files.length > 0 ? <div className="img-container">
                 {this.state.files.map((file, index) => 

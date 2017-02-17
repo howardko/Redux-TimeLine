@@ -3,30 +3,21 @@ const _add_a_post = (posts, post) =>{
     return newPosts
 }
 
-const _toogle_title = (posts, index) => {
-
-    let newPosts = [...posts]
-    newPosts[index].isTitleEditing = !newPosts[index].isTitleEditing
-    return newPosts
-}
-
-const _toogle_content = (posts, index) => {
-    let newPosts = [...posts]
-    newPosts[index].isContentEditing = !newPosts[index].isContentEditing
-    return newPosts
-}
-
 const _update_content = (posts, index, content) => {
     const newPosts = [...posts]
     newPosts[index].content = content
-    newPosts[index].isContentEditing = false
     return newPosts
 }
 
 const _update_title = (posts, index, title) => {
     const newPosts = [...posts]
     newPosts[index].title = title
-    newPosts[index].isTitleEditing = false
+    return newPosts
+}
+
+const _update_tag = (posts, index, tags) => {
+    const newPosts = [...posts]
+    newPosts[index].tags = tags
     return newPosts
 }
 
@@ -43,10 +34,6 @@ function posts(state = [], action){
       return _update_title(state, action.idx, action.title)
     case 'UPDATE_CONTENT':
       return _update_content(state, action.idx, action.content)
-    case 'TOOGLE_TITLE':
-      return _toogle_title(state, action.idx)
-    case 'TOOGLE_CONTENT':
-      return _toogle_content(state, action.idx)
     default:
       return state
   }

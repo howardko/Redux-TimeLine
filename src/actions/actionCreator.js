@@ -71,6 +71,25 @@ export function updateContent(idx, postId, post, content){
     };
 }
 
+export function updateTag(idx, postId, post, tags){
+    const updated = Object.assign({}, post, {tags: tags})
+    return (dispatch) => {
+      fetch('http://localhost:3004/posts/' + postId, {
+          method: 'put',
+          body: JSON.stringify(updated),
+          headers: new Headers({
+            'Content-Type': 'application/json'
+          })
+        })
+        .then((response) => response.json())
+        .then((posts) => dispatch({
+          type: 'UPDATE_TAG',
+          idx,
+          tags
+        }));
+    };
+}
+
 export function toogleTitle(idx){
   return {
     type: 'TOOGLE_TITLE',
@@ -81,6 +100,13 @@ export function toogleTitle(idx){
 export function toogleContent(idx){
   return {
     type: 'TOOGLE_CONTENT',
+    idx
+  }
+}
+
+export function toogleTag(idx){
+  return {
+    type: 'TOOGLE_TAG',
     idx
   }
 }

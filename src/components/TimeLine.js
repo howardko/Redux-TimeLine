@@ -3,7 +3,7 @@ import '../style/bootstrap.min.css'
 import '../style/App.scss'
 import PostListContainer from './PostListContainer'
 
-class TodoApp extends Component {
+class TimeLine extends Component {
 
   render() {
     return (
@@ -15,4 +15,4 @@ class TodoApp extends Component {
 }
 
 
-export default TodoApp;
+export default TimeLine;
