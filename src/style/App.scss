@@ -464,6 +464,28 @@ header {
   height: auto !important;
 }
 
+.tag {
+  background: #ddd;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  float: left;
+  margin: 5px;
+  position: relative;
+  font: 20px/100% arial, sans-serif;
+  color: #777;
+}
+
+.tag .close-thik {
+  color: #777;
+  font: 20px/100% arial, sans-serif;
+  right: 5px;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #fff;
+  top: 5px;
+}
+
+.tag .close-thik:hover {cursor: hand; cursor: pointer;}
+
 @media (max-width: 1200px) {
   #photos {
   -moz-column-count:    2;

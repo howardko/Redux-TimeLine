@@ -29,14 +29,15 @@ class PostAdd extends Component {
     this.setState({ tags: tags })
   }
 
-  handleSubmitOnclick = (onPostAdd) => {
+  handleSubmitOnclick = (onPostAdd, onTagsAdd) => {
     let id = +new Date()
     let date = new Date()
+    let tags = this.state.tags
     const post = {
       title: this.state.title,
       content: this.state.content,
       photos: this.state.files,
-      tags: this.state.tags,
+      tags: tags,
       id: id,
       date: date,
       time: (date.getMonth() + 1) + "/" + date.getDate() + ":" + date.getHours(),
@@ -45,6 +46,8 @@ class PostAdd extends Component {
       imageAlt: "location"
     }
     onPostAdd(post)
+    if(tags.length > 0)
+      onTagsAdd(tags)
     this.setState({ content: '', title: '', files: [], tags: [] });
   }
 
@@ -86,7 +89,7 @@ class PostAdd extends Component {
   }
 
   render() {
-    const {onPostAdd} = this.props
+    const {onPostAdd, onTagsAdd} = this.props
     return(
       <div className="cd-timeline-content">
           <div className="well clearfix">
@@ -132,7 +135,7 @@ class PostAdd extends Component {
                     Add Photo
             </button>
             <button className="btn btn-primary pull-right"
-                    onClick={() => this.handleSubmitOnclick(onPostAdd)}
+                    onClick={() => this.handleSubmitOnclick(onPostAdd, onTagsAdd)}
             >Summit</button>
           </div>
         </div>

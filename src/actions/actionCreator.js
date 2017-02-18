@@ -110,3 +110,28 @@ export function toogleTag(idx){
     idx
   }
 }
+
+export function removeTag(tag){
+  return {
+    type: 'REMOVE_TAG',
+    tag
+  }
+}
+
+export function addTags(tags){
+  return {
+    type: 'ADD_TAGS',
+    tags
+  }
+}
+
+export function loadTags() {
+    return (dispatch) => {
+      fetch('http://localhost:3004/posts')
+        .then((response) => response.json())
+        .then((posts) => dispatch({
+          type: "LOAD_TAGS",
+          posts
+        }));
+    };
+  }

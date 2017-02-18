@@ -3,8 +3,8 @@ import { routerReducer } from 'react-router-redux'
 
 import posts from './posts'
 import edit from './edit'
-import filter from './filter'
+import tags from './tags'
 
-const rootReducer = combineReducers({posts, edit, filter, routing: routerReducer})
+const rootReducer = combineReducers({posts, edit, tags, routing: routerReducer})
 
 export default rootReducer
