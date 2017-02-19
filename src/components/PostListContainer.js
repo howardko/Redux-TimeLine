@@ -26,7 +26,7 @@ class PostListContainer extends Component {
 
     return (
       <section id="cd-timeline" className="cd-container">
-        <PostAdd onPostAdd={addPost} onTagsAdd={addTags}/>
+        <PostAdd onPostAdd={addPost} onTagsAdd={addTags} />
         {elements}
       </section>
     )

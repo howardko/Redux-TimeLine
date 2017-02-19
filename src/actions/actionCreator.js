@@ -1,3 +1,5 @@
+import {storage} from '../database'
+
 export function fetchPosts() {
     return (dispatch) => {
       fetch('http://localhost:3004/posts')
@@ -9,28 +11,75 @@ export function fetchPosts() {
     };
   }
 
+// export function addPost(post){
+//   return (dispatch) => {
+//       fetch('http://localhost:3004/posts', {
+//           method: 'post',
+//           body: JSON.stringify(post),
+//           headers: new Headers({
+//             'Content-Type': 'application/json'
+//           })
+//         })
+//         .then((response) => response.json())
+//         .then((posts) => dispatch({
+//           type: "ADD_POST_SUCCESS",
+//           post
+//         }));
+//     };
+// }
+
+
 export function addPost(post){
   return (dispatch) => {
-      fetch('http://localhost:3004/posts', {
-          method: 'post',
-          body: JSON.stringify(post),
+      let files = post.photos
+      let storageRef = storage.ref()
+      let newPost = Object.assign({}, post)
+      return Promise.all( files.map( (file) => {
+            let metadata = {
+                'contentType': file.type
+             };
+            return storageRef.child('images/' + file.name).put(file, metadata)
+            .then(function(snapshot) {
+              const url = snapshot.metadata.downloadURLs[0];
+              return url
+              })
+            }
+          )
+        )
+        .then((photo_urls) => {
+            newPost = Object.assign(newPost, {photo_urls: photo_urls})
+            delete newPost.photos;
+            return fetch('http://localhost:3004/posts', {
+              method: 'post',
+              body: JSON.stringify(newPost),
+              headers: new Headers({
+                'Content-Type': 'application/json'
+              })
+            })
+          }
+        )
+        .then((response) => response.json())
+        .then((results) => dispatch({
+          type: "ADD_POST_SUCCESS",
+          post: newPost
+        }));
+      };
+}
+
+export function removePost(idx, postId){
+    return (dispatch) => {
+      fetch('http://localhost:3004/posts/' + postId, {
+          method: 'delete',
           headers: new Headers({
             'Content-Type': 'application/json'
           })
         })
         .then((response) => response.json())
-        .then((posts) => dispatch({
-          type: "ADD_POST_SUCCESS",
-          post
+        .then((results) => dispatch({
+          type: 'REMOVE_POST',
+          idx,
         }));
     };
-}
-
-export function removePost(idx){
-  return {
-    type: 'REMOVE_POST',
-    idx
-  }
 }
 
 export function updateTitle(idx, postId, post, title){

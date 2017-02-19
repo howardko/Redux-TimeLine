@@ -19,7 +19,7 @@ class Post extends Component {
           title={post.title}
           content={post.content}
           time={post.time}
-          photos={post.photos}
+          photo_urls={post.photo_urls}
           tags={post.tags}
           detailedLink={post.detailedLink}
         /> 

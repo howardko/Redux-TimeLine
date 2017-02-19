@@ -3,6 +3,11 @@ const _add_a_post = (posts, post) =>{
     return newPosts
 }
 
+const _remove_a_post = (posts, index) => {
+    const newPosts = [...posts.slice(0, index), ...posts.slice(index + 1)]
+    return newPosts
+}
+
 const _update_content = (posts, index, content) => {
     const newPosts = [...posts]
     newPosts[index].content = content
@@ -26,10 +31,9 @@ function posts(state = [], action){
     case 'FETCH_POSTS_SUCCESS':
       return action.posts  
     case 'ADD_POST_SUCCESS':
-      return _add_a_post(state, action.post)  
+      return _add_a_post(state, action.post)
     case 'REMOVE_POST':
-      console.log('remove posts')
-      return state
+      return _remove_a_post(state, action.idx)
     case 'UPDATE_TITLE':
       return _update_title(state, action.idx, action.title)
     case 'UPDATE_CONTENT':

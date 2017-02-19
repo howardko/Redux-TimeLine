@@ -3,17 +3,17 @@ import React, { Component } from 'react'
 class PostPhoto extends Component {
 
     render() {
-      const { photos } = this.props
+      const { photo_urls } = this.props
       return (
-        photos.length > 0 ? 
+        photo_urls.length > 0 ? 
           <div>
             <section id="photos">
-              {photos.map((file, index) => 
+              {photo_urls.map((url, index) => 
                 (<div key={ +new Date() + index }>
                     <img 
-                      key={file.preview} 
-                      src={file.preview} 
-                      alt={file.name} />
+                      key={url} 
+                      src={url} 
+                      alt={"not found"} />
                 </div>)
               )}
             </section>

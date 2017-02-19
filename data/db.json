@@ -1,103 +1,16 @@
 {
   "posts": [
     {
-      "title": "why or why",
-      "content": "say good bye",
-      "photos": [],
-      "tags": [
-        "test5",
-        "test6"
-      ],
-      "id": 1486996248825,
-      "date": "2017-02-13T14:30:48.825Z",
-      "time": "2/13:22",
-      "detailedLink": "http://localhost/post/1486996248825",
-      "imageFile": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-location.svg",
-      "imageAlt": "location"
-    },
-    {
-      "title": "12345",
-      "content": "12234",
-      "photos": [],
-      "tags": [
-        "1234"
-      ],
-      "id": 1487426776179,
-      "date": "2017-02-18T14:06:16.179Z",
-      "time": "2/18:22",
-      "detailedLink": "http://localhost/post/1487426776179",
-      "imageFile": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-location.svg",
-      "imageAlt": "location"
-    },
-    {
-      "title": "Redux20170218",
-      "content": "Redux20170218",
-      "photos": [],
-      "tags": [
-        "redux"
-      ],
-      "id": 1487427272870,
-      "date": "2017-02-18T14:14:32.870Z",
-      "time": "2/18:22",
-      "detailedLink": "http://localhost/post/1487427272870",
-      "imageFile": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-location.svg",
-      "imageAlt": "location"
-    },
-    {
-      "title": "Redux2",
-      "content": "haha",
-      "photos": [],
-      "tags": [
-        "redux"
-      ],
-      "id": 1487427381410,
-      "date": "2017-02-18T14:16:21.410Z",
-      "time": "2/18:22",
-      "detailedLink": "http://localhost/post/1487427381410",
-      "imageFile": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-location.svg",
-      "imageAlt": "location"
-    },
-    {
       "title": "Redux3",
       "content": "reduxaaa",
-      "photos": [],
       "tags": [
         "redux"
       ],
+      "photo_urls": [],
       "id": 1487427475995,
       "date": "2017-02-18T14:17:55.995Z",
       "time": "2/18:22",
       "detailedLink": "http://localhost/post/1487427475995",
-      "imageFile": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-location.svg",
-      "imageAlt": "location"
-    },
-    {
-      "title": "Redux test",
-      "content": "test",
-      "photos": [],
-      "tags": [
-        "redux",
-        "react"
-      ],
-      "id": 1487427734159,
-      "date": "2017-02-18T14:22:14.159Z",
-      "time": "2/18:22",
-      "detailedLink": "http://localhost/post/1487427734159",
-      "imageFile": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-location.svg",
-      "imageAlt": "location"
-    },
-    {
-      "title": "Redux test 2",
-      "content": "test",
-      "photos": [],
-      "tags": [
-        "redux",
-        "router"
-      ],
-      "id": 1487427800218,
-      "date": "2017-02-18T14:23:20.218Z",
-      "time": "2/18:22",
-      "detailedLink": "http://localhost/post/1487427800218",
       "imageFile": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-location.svg",
       "imageAlt": "location"
     }

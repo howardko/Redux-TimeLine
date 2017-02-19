@@ -69,18 +69,28 @@ class PostContent extends Component{
     )
   }
 
+  handleRemovePostOnclick = (onPostRemove) => {
+    const { index, postId } = this.props
+    onPostRemove(index, postId)
+  }
+
   render()
   {
-    const { focused, isTitleEditing, isContentEditing, isTagEditing, detailedLink, time, photos } = this.props
+    const { focused, isTitleEditing, isContentEditing, isTagEditing, detailedLink, time, photo_urls } = this.props
     const titleDisplay = (isTitleEditing && focused) ? this.renderTitleEditMode() : this.renderTitleViewMode() 
     const contentDisplay = (isContentEditing && focused) ? this.renderContentEditMode() : this.renderContentViewMode()
     const tagDisplay = (isTagEditing && focused) ? this.renderTagEditMode() : this.renderTagViewMode()
+    const { onPostRemove } = this.props
     return(
     <div>
+        <div className="tag">
+          <span className="close-thik" 
+                onClick={() => this.handleRemovePostOnclick(onPostRemove)}>&times;</span>
+        </div>
         {titleDisplay}
         {contentDisplay}
         {tagDisplay}
-        <PostPhoto photos={photos} />
+        <PostPhoto photo_urls={photo_urls} />
         <a href={detailedLink} className="cd-read-more" style={{margin: "5px"}} >Read more</a>
         <span className="cd-date">{time}</span>
     </div>)
