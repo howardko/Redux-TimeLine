@@ -11,24 +11,6 @@ export function fetchPosts() {
     };
   }
 
-// export function addPost(post){
-//   return (dispatch) => {
-//       fetch('http://localhost:3004/posts', {
-//           method: 'post',
-//           body: JSON.stringify(post),
-//           headers: new Headers({
-//             'Content-Type': 'application/json'
-//           })
-//         })
-//         .then((response) => response.json())
-//         .then((posts) => dispatch({
-//           type: "ADD_POST_SUCCESS",
-//           post
-//         }));
-//     };
-// }
-
-
 export function addPost(post){
   return (dispatch) => {
       let files = post.photos
@@ -78,7 +60,17 @@ export function removePost(idx, postId){
         .then((results) => dispatch({
           type: 'REMOVE_POST',
           idx,
-        }));
+        }))
+        .then(
+          () => {
+            return fetch('http://localhost:3004/posts')
+          } 
+        )
+        .then((response) => response.json())
+        .then((posts) => dispatch({
+          type: "LOAD_TAGS",
+          posts
+        }))
     };
 }
 
