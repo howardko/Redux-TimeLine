@@ -14,12 +14,6 @@ export function fetchPosts() {
             })
           }
         )
-      // fetch('http://localhost:3004/posts')
-      //   .then((response) => response.json())
-      //   .then((posts) => dispatch({
-      //     type: "FETCH_POSTS_SUCCESS",
-      //     posts
-      //   }));
     }
   }
 
@@ -49,49 +43,14 @@ export function addPost(post){
             var updates = {};
             updates['/posts/' + newPost.id] = newPost;
             return database.ref().update(updates)
-
-            // return fetch('http://localhost:3004/posts', {
-            //   method: 'post',
-            //   body: JSON.stringify(newPost),
-            //   headers: new Headers({
-            //     'Content-Type': 'application/json'
-            //   })
-            // })
           }
         )
-        //.then((response) => response.json())
         .then(() => dispatch({
           type: "ADD_POST_SUCCESS",
           post: newPost
         }))
       }
 }
-
-// export function removePost(idx, postId){
-//     return (dispatch) => {
-//       fetch('http://localhost:3004/posts/' + postId, {
-//           method: 'delete',
-//           headers: new Headers({
-//             'Content-Type': 'application/json'
-//           })
-//         })
-//         .then((response) => response.json())
-//         .then((results) => dispatch({
-//           type: 'REMOVE_POST',
-//           idx,
-//         }))
-//         .then(
-//           () => {
-//             return fetch('http://localhost:3004/posts')
-//           } 
-//         )
-//         .then((response) => response.json())
-//         .then((posts) => dispatch({
-//           type: "LOAD_TAGS",
-//           posts
-//         }))
-//     };
-// }
 
 export function removePost(idx, postId, file_names){
     let posts = []
@@ -133,14 +92,6 @@ export function removePost(idx, postId, file_names){
 export function updateTitle(idx, postId, post, title){
     const updated = Object.assign({}, post, {title: title})
     return (dispatch) => {
-      // fetch('http://localhost:3004/posts/' + postId, {
-      //     method: 'put',
-      //     body: JSON.stringify(updated),
-      //     headers: new Headers({
-      //       'Content-Type': 'application/json'
-      //     })
-      //   })
-        // .then((response) => response.json())
         var updates = {};
         updates['/posts/' + updated.id] = updated;
         return database.ref().update(updates)
@@ -169,14 +120,6 @@ export function updateContent(idx, postId, post, content){
 export function updateTag(idx, postId, post, tags){
     const updated = Object.assign({}, post, {tags: tags})
     return (dispatch) => {
-      // fetch('http://localhost:3004/posts/' + postId, {
-      //     method: 'put',
-      //     body: JSON.stringify(updated),
-      //     headers: new Headers({
-      //       'Content-Type': 'application/json'
-      //     })
-      //   })
-      //   .then((response) => response.json())
         var updates = {};
         updates['/posts/' + updated.id] = updated;
         return database.ref().update(updates)
@@ -237,12 +180,6 @@ export function loadTags() {
             })
           }
         )
-      // fetch('http://localhost:3004/posts')
-      //   .then((response) => response.json())
-      //   .then((posts) => dispatch({
-      //     type: "LOAD_TAGS",
-      //     posts
-      //   }));
     };
   }
 
