@@ -30,6 +30,7 @@ class PostAdd extends Component {
   }
 
   handleSubmitOnclick = (onPostAdd, onTagsAdd) => {
+
     let id = +new Date()
     let date = new Date()
     let tags = this.state.tags
@@ -48,6 +49,8 @@ class PostAdd extends Component {
     onPostAdd(post)
     if(tags.length > 0)
       onTagsAdd(tags)
+    
+    this.postAddTagInput && this.postAddTagInput.clear()
     this.setState({ content: '', title: '', files: [], tags: [] });
   }
 
@@ -115,7 +118,7 @@ class PostAdd extends Component {
                       onChange={this.handleContentChange}
             />
             <br />
-            <PostAddTag onTagChange={this.handleTagsChange} />
+            <PostAddTag ref={ node => {this.postAddTagInput = node} } onTagChange={this.handleTagsChange} />
             <br/>
             {
               this.state.files.length > 0 ? <div className="img-container">

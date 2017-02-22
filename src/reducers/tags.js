@@ -3,7 +3,7 @@ import * as utility from '../utility/utility.js'
 
 function _load_tags(posts){
     return (posts.length > 0) 
-            ? posts.map((post) => (post.tags)).reduce((pre, curr) => (utility.union(pre, curr)))
+            ? posts.map((post) => (post.tags || [])).reduce((pre, curr) => (utility.union(pre, curr)))
             : []
   }
 

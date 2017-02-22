@@ -15,14 +15,12 @@ class PostAddTag extends Component {
     onTagChange && onTagChange(tags)
   }
 
-  handleBlur = (e) => {
-    const {onBlur} = this.props
-    onBlur && onBlur(this.state.tags)
+  clear = () => {
+    this.setState({tags: []})
   }
 
   render() {
-    return <TagsInput value={this.state.tags} 
-                      onChange={this.handleChange} onChangeInput={this.handleBlur}/>
+    return <TagsInput value={this.state.tags} onChange={this.handleChange} />
   }
 }
 
