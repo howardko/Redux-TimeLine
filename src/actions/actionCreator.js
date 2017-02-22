@@ -1,14 +1,26 @@
-import {storage} from '../database'
+import database, {storage} from '../database'
 
 export function fetchPosts() {
     return (dispatch) => {
-      fetch('http://localhost:3004/posts')
-        .then((response) => response.json())
-        .then((posts) => dispatch({
-          type: "FETCH_POSTS_SUCCESS",
-          posts
-        }));
-    };
+        return database.ref('/posts').once('value', function(snapshot) {
+            let posts = []
+            snapshot.forEach(function(childSnapshot) {
+                  let post = childSnapshot.val()
+                  posts.push(post);
+            })
+            dispatch({
+              type: "FETCH_POSTS_SUCCESS",
+              posts
+            })
+          }
+        )
+      // fetch('http://localhost:3004/posts')
+      //   .then((response) => response.json())
+      //   .then((posts) => dispatch({
+      //     type: "FETCH_POSTS_SUCCESS",
+      //     posts
+      //   }));
+    }
   }
 
 export function addPost(post){
@@ -21,114 +33,159 @@ export function addPost(post){
                 'contentType': file.type
              };
             return storageRef.child('images/' + file.name).put(file, metadata)
-            .then(function(snapshot) {
-              const url = snapshot.metadata.downloadURLs[0];
-              return url
-              })
+              .then(function(snapshot) {
+                const url = snapshot.metadata.downloadURLs[0];
+                return { url: url, file_name: file.name }
+                })
             }
           )
         )
-        .then((photo_urls) => {
-            newPost = Object.assign(newPost, {photo_urls: photo_urls})
+        .then((photos) => {
+            const photo_urls = photos.map((photo) => photo.url)
+            const file_names = photos.map((photo) => photo.file_name)
+            newPost = Object.assign(newPost, {photo_urls: photo_urls, file_names: file_names})
             delete newPost.photos;
-            return fetch('http://localhost:3004/posts', {
-              method: 'post',
-              body: JSON.stringify(newPost),
-              headers: new Headers({
-                'Content-Type': 'application/json'
-              })
-            })
+
+            var updates = {};
+            updates['/posts/' + newPost.id] = newPost;
+            return database.ref().update(updates)
+
+            // return fetch('http://localhost:3004/posts', {
+            //   method: 'post',
+            //   body: JSON.stringify(newPost),
+            //   headers: new Headers({
+            //     'Content-Type': 'application/json'
+            //   })
+            // })
           }
         )
-        .then((response) => response.json())
-        .then((results) => dispatch({
+        //.then((response) => response.json())
+        .then(() => dispatch({
           type: "ADD_POST_SUCCESS",
           post: newPost
-        }));
-      };
+        }))
+      }
 }
 
-export function removePost(idx, postId){
+// export function removePost(idx, postId){
+//     return (dispatch) => {
+//       fetch('http://localhost:3004/posts/' + postId, {
+//           method: 'delete',
+//           headers: new Headers({
+//             'Content-Type': 'application/json'
+//           })
+//         })
+//         .then((response) => response.json())
+//         .then((results) => dispatch({
+//           type: 'REMOVE_POST',
+//           idx,
+//         }))
+//         .then(
+//           () => {
+//             return fetch('http://localhost:3004/posts')
+//           } 
+//         )
+//         .then((response) => response.json())
+//         .then((posts) => dispatch({
+//           type: "LOAD_TAGS",
+//           posts
+//         }))
+//     };
+// }
+
+export function removePost(idx, postId, file_names){
+    let posts = []
     return (dispatch) => {
-      fetch('http://localhost:3004/posts/' + postId, {
-          method: 'delete',
-          headers: new Headers({
-            'Content-Type': 'application/json'
-          })
-        })
-        .then((response) => response.json())
-        .then((results) => dispatch({
+      return database.ref('/posts/' + postId).remove()
+        .then(() => dispatch({
           type: 'REMOVE_POST',
           idx,
         }))
         .then(
           () => {
-            return fetch('http://localhost:3004/posts')
+              if(file_names){
+                let storageRef = storage.ref()
+                return Promise.all( file_names.map( (name) => {
+                      return storageRef.child('images/' + name).delete()
+                    }
+                  )
+                )
+              }
+              else Promise.resolve(true)
+          }
+        )
+        .then(() => {
+            return database.ref('/posts').once('value', function(snapshot) {
+              snapshot.forEach(function(childSnapshot) {
+                let post = childSnapshot.val()
+                posts.push(post);
+              })
+                dispatch({
+                    type: "LOAD_TAGS",
+                    posts
+                })
+            })
           } 
         )
-        .then((response) => response.json())
-        .then((posts) => dispatch({
-          type: "LOAD_TAGS",
-          posts
-        }))
-    };
+    }
 }
 
 export function updateTitle(idx, postId, post, title){
     const updated = Object.assign({}, post, {title: title})
     return (dispatch) => {
-      fetch('http://localhost:3004/posts/' + postId, {
-          method: 'put',
-          body: JSON.stringify(updated),
-          headers: new Headers({
-            'Content-Type': 'application/json'
-          })
-        })
-        .then((response) => response.json())
-        .then((posts) => dispatch({
-          type: 'UPDATE_TITLE',
-          idx,
-          title
-        }));
-    };
+      // fetch('http://localhost:3004/posts/' + postId, {
+      //     method: 'put',
+      //     body: JSON.stringify(updated),
+      //     headers: new Headers({
+      //       'Content-Type': 'application/json'
+      //     })
+      //   })
+        // .then((response) => response.json())
+        var updates = {};
+        updates['/posts/' + updated.id] = updated;
+        return database.ref().update(updates)
+          .then((result) => dispatch({
+            type: 'UPDATE_TITLE',
+            idx,
+            title
+          }))
+    }
 }
 
 export function updateContent(idx, postId, post, content){
     const updated = Object.assign({}, post, {content: content})
     return (dispatch) => {
-      fetch('http://localhost:3004/posts/' + postId, {
-          method: 'put',
-          body: JSON.stringify(updated),
-          headers: new Headers({
-            'Content-Type': 'application/json'
-          })
-        })
-        .then((response) => response.json())
-        .then((posts) => dispatch({
-          type: 'UPDATE_CONTENT',
-          idx,
-          content
-        }));
-    };
+        var updates = {};
+        updates['/posts/' + updated.id] = updated;
+        return database.ref().update(updates)
+          .then((result) => dispatch({
+            type: 'UPDATE_CONTENT',
+            idx,
+            content
+          }))
+    }
 }
 
 export function updateTag(idx, postId, post, tags){
     const updated = Object.assign({}, post, {tags: tags})
     return (dispatch) => {
-      fetch('http://localhost:3004/posts/' + postId, {
-          method: 'put',
-          body: JSON.stringify(updated),
-          headers: new Headers({
-            'Content-Type': 'application/json'
-          })
-        })
-        .then((response) => response.json())
-        .then((posts) => dispatch({
-          type: 'UPDATE_TAG',
-          idx,
-          tags
-        }));
-    };
+      // fetch('http://localhost:3004/posts/' + postId, {
+      //     method: 'put',
+      //     body: JSON.stringify(updated),
+      //     headers: new Headers({
+      //       'Content-Type': 'application/json'
+      //     })
+      //   })
+      //   .then((response) => response.json())
+        var updates = {};
+        updates['/posts/' + updated.id] = updated;
+        return database.ref().update(updates)
+          .then((posts) => dispatch({
+            type: 'UPDATE_TAG',
+            idx,
+            tags
+          }))
+    }
 }
 
 export function toogleTitle(idx){
@@ -168,11 +225,44 @@ export function addTags(tags){
 
 export function loadTags() {
     return (dispatch) => {
-      fetch('http://localhost:3004/posts')
-        .then((response) => response.json())
-        .then((posts) => dispatch({
-          type: "LOAD_TAGS",
-          posts
-        }));
+        return database.ref('/posts').once('value', function(snapshot) {
+            let posts = []
+            snapshot.forEach(function(childSnapshot) {
+              let post = childSnapshot.val()
+              posts.push(post);
+            })
+            dispatch({
+              type: "LOAD_TAGS",
+              posts
+            })
+          }
+        )
+      // fetch('http://localhost:3004/posts')
+      //   .then((response) => response.json())
+      //   .then((posts) => dispatch({
+      //     type: "LOAD_TAGS",
+      //     posts
+      //   }));
     };
   }
+
+  export function removeImage(post, file_index){
+
+    const updated = Object.assign({}, post)
+    const file_name = updated.file_names[file_index]
+    delete updated.file_names[file_index]
+    delete updated.photo_urls[file_index]
+    return (dispatch) => {
+        var updates = {};
+        updates['/posts/' + post.id] = updated;
+        return database.ref().update(updates)
+        .then(
+          () => storage.ref('/images/' + file_name).delete()
+        )
+        .then(() => dispatch({
+          type: 'REMOVE_IMAGE',
+          postId: post.id,
+          file_index
+        }))
+    };
+}

@@ -54,7 +54,7 @@ class PostContent extends Component{
     return(
       <h2
         onDoubleClick={() => onTagDoubleClick(index)}>
-        {tags.join(",")}
+        {tags && tags.join(",")}
      </h2>
     )
   }
@@ -69,28 +69,24 @@ class PostContent extends Component{
     )
   }
 
-  handleRemovePostOnclick = (onPostRemove) => {
-    const { index, postId } = this.props
-    onPostRemove(index, postId)
-  }
-
   render()
   {
-    const { focused, isTitleEditing, isContentEditing, isTagEditing, detailedLink, time, photo_urls } = this.props
+    const { focused, isTitleEditing, isContentEditing, isTagEditing, detailedLink, time } = this.props
     const titleDisplay = (isTitleEditing && focused) ? this.renderTitleEditMode() : this.renderTitleViewMode() 
     const contentDisplay = (isContentEditing && focused) ? this.renderContentEditMode() : this.renderContentViewMode()
     const tagDisplay = (isTagEditing && focused) ? this.renderTagEditMode() : this.renderTagViewMode()
-    const { onPostRemove } = this.props
+    const { onPostRemove, onImageRemove } = this.props
+    const { post, index, postId } = this.props
     return(
     <div>
         <div className="tag">
           <span className="close-thik" 
-                onClick={() => this.handleRemovePostOnclick(onPostRemove)}>&times;</span>
+                onClick={() => onPostRemove(index, postId, post.file_names)}>&times;</span>
         </div>
         {titleDisplay}
         {contentDisplay}
         {tagDisplay}
-        <PostPhoto photo_urls={photo_urls} />
+        <PostPhoto post={post} onImageRemove={onImageRemove} />
         <a href={detailedLink} className="cd-read-more" style={{margin: "5px"}} >Read more</a>
         <span className="cd-date">{time}</span>
     </div>)

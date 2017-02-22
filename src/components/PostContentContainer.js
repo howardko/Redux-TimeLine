@@ -8,8 +8,8 @@ import PostContent from './PostContent'
 class PostContentContainer extends Component{
   render()
   {
-    const {toogleContent, toogleTitle, toogleTag, updateContent, updateTitle, updateTag, removePost} = this.props
-    const { index, postId, post, detailedLink, time, photo_urls, tags, title, content } = this.props
+    const {toogleContent, toogleTitle, toogleTag, updateContent, updateTitle, updateTag, removePost, removeImage} = this.props
+    const { index, postId, post, detailedLink, time, tags, title, content } = this.props
     const {isTitleEditing, isContentEditing, isTagEditing, focusIndex} = this.props
     const focused = (index === focusIndex)
     return(
@@ -26,7 +26,6 @@ class PostContentContainer extends Component{
             content={content}
             detailedLink={detailedLink}
             time={time}
-            photo_urls={photo_urls}
             tags={tags}
             onContentUpdate={updateContent}
             onContentDoubleClick={toogleContent}
@@ -35,6 +34,7 @@ class PostContentContainer extends Component{
             onTitleUpdate={updateTitle}
             onTagUpdate={updateTag}
             onPostRemove={removePost}
+            onImageRemove={removeImage}
         />
     </div>)
   }
