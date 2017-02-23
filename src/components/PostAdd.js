@@ -118,7 +118,8 @@ class PostAdd extends Component {
                       onChange={this.handleContentChange}
             />
             <br />
-            <PostAddTag ref={ node => {this.postAddTagInput = node} } onTagChange={this.handleTagsChange} />
+            <PostAddTag ref={ node => {this.postAddTagInput = node} } 
+                        onTagChange={this.handleTagsChange} />
             <br/>
             {
               this.state.files.length > 0 ? <div className="img-container">

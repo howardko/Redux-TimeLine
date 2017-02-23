@@ -11,5 +11,8 @@ var config = {
 firebase.initializeApp(config)
 const database = firebase.database()
 export const storage = firebase.storage()
+export const auth = firebase.auth()
+export const authProvider = new firebase.auth.FacebookAuthProvider();
+authProvider.addScope('user_birthday');
 
 export default database

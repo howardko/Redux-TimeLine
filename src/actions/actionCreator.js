@@ -1,4 +1,4 @@
-import database, {storage} from '../database'
+import database, {storage, auth, authProvider} from '../database'
 
 export function fetchPosts() {
     return (dispatch) => {
@@ -202,4 +202,43 @@ export function loadTags() {
           file_index
         }))
     };
+}
+
+export function login(){
+    return (dispatch) => {
+        auth.signInWithPopup(authProvider).then(function(result) {
+          const token = result.credential.accessToken;
+          const user = result.user;
+          dispatch({
+            type: 'SIGN_IN',
+            token,
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            uid: user.uid
+          })
+        }).catch(function(error) {
+          console.error(error)
+        })
+    }
+}
+
+export function logout(){
+    return (dispatch) => {
+      auth.signOut()
+      .then(() => dispatch({
+            type: 'SIGN_OUT'
+        }))
+    }
+}
+
+export function loadUser(user){
+  return {
+    type: 'LOAD_USER',
+      displayName: user.displayName,
+      email: user.email,
+      photoURL: user.photoURL,
+      uid: user.uid,
+      token: ""
+  }
 }
